@@ -7,17 +7,18 @@ import * as S3 from 'aws-sdk/clients/s3';
 export class UploadService {
 
   constructor() { }
-  uploadFile(file) {
+  fileUpload(file) {
     const contentType = file.type;
     const bucket = new S3(
           {
-              accessKeyId: 'AKIAXJBTAKG5OT22W7M2',
-              secretAccessKey: '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',
-              region: 'ap-south-1'
+              accessKeyId: 'Aceess Key',
+              secretAccessKey: 'Secret Access Key',
+              region: 'ap-south-1',
+            //   signatureVersion: 'v4'
           }
       );
       const params = {
-          Bucket: 'assetstoragemuse',
+          Bucket: 'gajstore',
           Key:  file.name,
           Body: file,
           ACL: 'public-read',
@@ -25,22 +26,11 @@ export class UploadService {
       };
       bucket.upload(params, function (err, data) {
           if (err) {
-              console.log('There was an error uploading your file: ', err);
+              console.log('EROOR: ',JSON.stringify( err));
               return false;
           }
-          console.log('Successfully uploaded file.', data);
+          console.log('File Uploaded.', data);
           return true;
       });
-//for upload progress   
-/*bucket.upload(params).on('httpUploadProgress', function (evt) {
-          console.log(evt.loaded + ' of ' + evt.total + ' Bytes');
-      }).send(function (err, data) {
-          if (err) {
-              console.log('There was an error uploading your file: ', err);
-              return false;
-          }
-          console.log('Successfully uploaded file.', data);
-          return true;
-      });*/
-}
+    }
 }
